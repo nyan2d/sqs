@@ -2,6 +2,7 @@ package sqs
 
 import (
 	"database/sql"
+	"errors"
 	"time"
 )
 
@@ -55,10 +56,20 @@ func (ss *SessionStorage) GetSession(token string) (*Session, error) {
 	if !ok {
 		session, err := ss.selectSessionByToken(token)
 		if err != nil {
+			// HACK:
+			if len(ss.cache) > ss.cacheCap {
+				ss.cacheCleanup()
+			}
+			ss.cache[token] = nil
 			return nil, err
 		}
 		ss.cache[token] = session.Clone()
 		return session, nil
 	}
+
+	if cached == nil {
+		return nil, errors.New("session not found")
+	}
+
 	return cached.Clone(), nil
 }
