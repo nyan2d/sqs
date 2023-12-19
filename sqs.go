@@ -73,3 +73,11 @@ func (ss *SessionStorage) GetSession(token string) (*Session, error) {
 
 	return cached.Clone(), nil
 }
+
+func (ss *SessionStorage) RemoveSession(token string) error {
+	err := ss.removeSession(token)
+	if err != nil {
+		return errors.New("failed to remove session")
+	}
+	return nil
+}
