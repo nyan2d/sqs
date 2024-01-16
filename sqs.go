@@ -79,5 +79,6 @@ func (ss *SessionStorage) RemoveSession(token string) error {
 	if err != nil {
 		return errors.New("failed to remove session")
 	}
+	delete(ss.cache, token)
 	return nil
 }

@@ -55,7 +55,7 @@ func (ss *SessionStorage) selectSessionByToken(token string) (session *Session, 
 }
 
 func (ss *SessionStorage) removeSession(token string) error {
-	q := `DELETE FROM ` + tname(ss.tableName) + `WHERE token=?`
+	q := `DELETE FROM ` + tname(ss.tableName) + ` WHERE token=?`
 	_, err := ss.db.Exec(q)
 	return err
 }
