@@ -68,7 +68,7 @@ func (ss *SessionStorage) GetSession(token string) (*Session, error) {
 	}
 
 	if cached == nil {
-		return nil, errors.New("session not found")
+		return nil, errors.New("Session not found")
 	}
 
 	return cached.Clone(), nil
@@ -77,7 +77,7 @@ func (ss *SessionStorage) GetSession(token string) (*Session, error) {
 func (ss *SessionStorage) RemoveSession(token string) error {
 	err := ss.removeSession(token)
 	if err != nil {
-		return errors.New("failed to remove session")
+		return err
 	}
 	delete(ss.cache, token)
 	return nil
